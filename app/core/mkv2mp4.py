@@ -27,7 +27,7 @@ class mkv2mp4(object):
     #         print(cmd)
     #         self.cmds.append(cmd)
     #         s_count += 1
-    # def run(self):
+    def run(self):
         for item in self.cmds:
             p = subprocess.Popen(item, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
             (output, err) = p.communicate()
