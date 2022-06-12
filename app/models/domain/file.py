@@ -46,6 +46,16 @@ class File(ModelBase, Base):
         return original
 
 
+    @classmethod
+    def find_by_id_status(cls, session, id_status):
+        return session.query(
+            cls.id,
+            cls.original_path,
+            cls.id_status,
+            cls.date_created
+        ).filter_by(id_status=id_status).all()
+
+
 
 class FileStatus(ModelBase, Base):
     __tablename__ = 'FileStatus'
