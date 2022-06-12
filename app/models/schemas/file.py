@@ -5,21 +5,29 @@ from pydantic import BaseModel
 
 
 
-
-class FileAdd(BaseModel):
-    original_path: str = Field(title="Original URL")
+class baseSchema(BaseModel):
     class Config:
         orm_mode = True
 
 
-class FileDetail(BaseModel):
+class FileAdd(baseSchema):
+    original_path: str = Field(title="Original URL")
+    
+
+
+class FileDetail(baseSchema):
     id: int
     original_path: str
     id_status: int
     date_created: datetime
-    class Config:
-        orm_mode = True
 
 
-class FileStatusUpdate(BaseModel):
+class FileStatusUpdate(baseSchema):
     id_status: int
+
+
+class FileAddData(baseSchema):
+    id_file: int
+    quality: str
+    language: str
+    name: str

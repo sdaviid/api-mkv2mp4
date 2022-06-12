@@ -17,9 +17,14 @@ from app.core.database import(
 )
 
 from app.api.base import api_router
+from app.watch.watcher import watcher
 
 
 Base.metadata.create_all(bind=engine)
+
+OUTPUT_PATH_FFMPEG_FILES = '/var/www/html/'
+inst_watcher = watcher(SessionLocal(), OUTPUT_PATH_FFMPEG_FILES)
+inst_watcher.start()
 
 
 app = FastAPI(

@@ -38,9 +38,9 @@ class File(ModelBase, Base):
 
 
     @classmethod
-    def update(cls, session, id, data):
+    def update(cls, session, id, id_status):
         original = File.find_by_id(session, id=id)
-        original.id_status = data.id_status
+        original.id_status = id_status
         session.commit()
         session.refresh(original)
         return original
@@ -66,9 +66,23 @@ class FileStatus(ModelBase, Base):
 
 
 class FileData(ModelBase, Base):
-    __tablename__ = 'FileDate'
+    __tablename__ = 'FileData'
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    id_file = Column(Integer)
     quality = Column(String(255))
     language = Column(String(255))
     name = Column(String(255))
     date_created = Column(DateTime, default=datetime.utcnow())
+
+
+    @classmethod
+    def add(cls, session, id_file, quality, language, name):
+        file_data = FileData()
+        file_data.id_file = data.id_file
+        file_data.quality = data.quality
+        file_data.language = data.language
+        file_data.name = data.name
+        session.add(file_data)
+        session.commit()
+        session.refresh(file_data)
+        return FileData.find_by_id(session=session, id=file_data.id)

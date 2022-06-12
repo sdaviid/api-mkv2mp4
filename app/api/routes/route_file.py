@@ -18,7 +18,8 @@ from app.models.domain.file import(
 from app.models.schemas.file import(
     FileAdd,
     FileDetail,
-    FileStatusUpdate
+    FileStatusUpdate,
+    FileAddData
 )
 
 
@@ -36,6 +37,17 @@ router = APIRouter()
 def add_file(data: FileAdd, response: Response, db: Session = Depends(get_db)):
     """List all logs"""
     return File.add(session=db, data=data)
+
+
+
+@router.post(
+    '/add-data',
+    status_code=status.HTTP_200_OK,
+    response_model=FileAddData
+)
+def add_file_data(data: FileAddData, response: Response, db: Session = Depends(get_db)):
+    """List all logs"""
+    return FileData.add(session=db, data=data)
 
 
 @router.get(
