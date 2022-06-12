@@ -18,7 +18,11 @@ class mkv2mp4(object):
             name = os.path.join(self.output_path, self.input.split('/')[-1:][0].replace('mkv', ''))
             cmd = f'ffmpeg -i {self.input} -c:v copy -c:a aac -map 0:v:0 -map 0:a:{a_count} -movflags +faststart {name}-{item.language}.mp4'
             self.cmds.append(cmd)
-            self.outs.append(out)
+            self.outs.append({
+                'quality': self.media_info.video_tracks[0].height,
+                'language': item.language,
+                'data': out
+            })
             a_count += 1
     #     s_count = 0
     #     for item in self.subtitle_tracks:
