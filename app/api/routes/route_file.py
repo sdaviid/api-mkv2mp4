@@ -57,7 +57,7 @@ def add_file_data(data: FileAddData, response: Response, db: Session = Depends(g
 )
 def status_data_file(id: int, response: Response, db: Session = Depends(get_db)):
     """List all logs"""
-    return FileData.find_by_id_file(session=db, id=id)
+    return FileData.find_by_id_file(session=db, id_file=id)
 
 
 
