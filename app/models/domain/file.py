@@ -78,10 +78,10 @@ class FileData(ModelBase, Base):
     @classmethod
     def add(cls, session, id_file, quality, language, name):
         file_data = FileData()
-        file_data.id_file = data.id_file
-        file_data.quality = data.quality
-        file_data.language = data.language
-        file_data.name = data.name
+        file_data.id_file = id_file
+        file_data.quality = quality
+        file_data.language = language
+        file_data.name = name
         session.add(file_data)
         session.commit()
         session.refresh(file_data)
