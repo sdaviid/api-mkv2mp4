@@ -86,3 +86,16 @@ class FileData(ModelBase, Base):
         session.commit()
         session.refresh(file_data)
         return FileData.find_by_id(session=session, id=file_data.id)
+
+
+
+    @classmethod
+    def find_by_id_file(cls, session, id_file):
+        return session.query(
+            cls.id,
+            cls.id_file,
+            cls.quality,
+            cls.language,
+            cls.name,
+            cls.date_created
+        ).filter_by(id_file=id_file).all()

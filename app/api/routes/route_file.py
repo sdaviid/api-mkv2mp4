@@ -50,6 +50,18 @@ def add_file_data(data: FileAddData, response: Response, db: Session = Depends(g
     return FileData.add(session=db, data=data)
 
 
+
+@router.get(
+    '/status-data/{id}',
+    status_code=status.HTTP_200_OK,
+)
+def status_data_file(id: int, response: Response, db: Session = Depends(get_db)):
+    """List all logs"""
+    return FileData.find_by_id_file(session=db, id=id)
+
+
+
+
 @router.get(
     '/status/{id}',
     status_code=status.HTTP_200_OK,
