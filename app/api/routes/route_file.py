@@ -56,8 +56,24 @@ def add_file_data(data: FileAddData, response: Response, db: Session = Depends(g
     status_code=status.HTTP_200_OK,
 )
 def status_data_file(id: int, response: Response, db: Session = Depends(get_db)):
-    """List all logs"""
-    return FileData.find_by_id_file(session=db, id_file=id)
+    data = FileData.find_by_id_file(session=db, id_file=id)
+    if data:
+        response = []
+        for item in data:
+            temp = {
+                'id': item.id,
+                'id_file': item.id_file,
+                'quality': item.quality,
+                'language': item.language,
+                'name': item.name,
+                'serve': f'http://storage-ffmpeg.playthis.site/{name}',
+                'date_created': item.date_created
+            }
+            response.append(temp)
+        return response
+    return {
+        'error': True
+    }
 
 
 
