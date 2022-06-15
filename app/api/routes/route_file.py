@@ -66,7 +66,7 @@ def status_data_file(id: int, response: Response, db: Session = Depends(get_db))
                 'quality': item.quality,
                 'language': item.language,
                 'name': item.name,
-                'serve': f'http://storage-ffmpeg.playthis.site/{name}',
+                'serve': f'http://storage-ffmpeg.playthis.site/{item.name}',
                 'date_created': item.date_created
             }
             response.append(temp)
