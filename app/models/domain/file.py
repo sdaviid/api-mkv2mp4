@@ -25,6 +25,7 @@ class File(ModelBase, Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     original_path = Column(String(255))
     md5_name = Column(String(255))
+    md5_father = Column(String(255), default=None)
     id_status = Column(Integer, ForeignKey("FileStatus.id"))
     date_created = Column(DateTime, default=datetime.utcnow())
 
@@ -33,6 +34,7 @@ class File(ModelBase, Base):
         file = File()
         file.original_path = data.original_path
         file.md5_name = md5(data.original_path[data.original_path.rindex('/')+1:])
+        file.md5_father = data.md5_father
         file.id_status = 1
         session.add(file)
         session.commit()
@@ -55,6 +57,7 @@ class File(ModelBase, Base):
             cls.id,
             cls.original_path,
             cls.md5_name,
+            cls.md5_father,
             cls.id_status,
             cls.date_created
         ).filter_by(id_status=id_status).all()
@@ -66,6 +69,7 @@ class File(ModelBase, Base):
             cls.id,
             cls.original_path,
             cls.md5_name,
+            cls.md5_father,
             cls.id_status,
             cls.date_created
         ).filter_by(md5_name=md5_name).first()
