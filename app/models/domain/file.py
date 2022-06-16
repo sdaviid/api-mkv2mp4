@@ -75,7 +75,7 @@ class File(ModelBase, Base):
         ).filter_by(md5_name=md5_name).first()
 
 
-    classmethod
+    @classmethod
     def find_by_md5_father(cls, session, md5_father):
         return session.query(
             cls.id,
