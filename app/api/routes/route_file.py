@@ -52,7 +52,7 @@ def add_file_data(data: FileAddData, response: Response, db: Session = Depends(g
 
 
 @router.get(
-    '/status-data/{id}',
+    '/status-data-by-id/{id}',
     status_code=status.HTTP_200_OK,
 )
 def status_data_file(id: int, response: Response, db: Session = Depends(get_db)):
@@ -63,6 +63,33 @@ def status_data_file(id: int, response: Response, db: Session = Depends(get_db))
             temp = {
                 'id': item.id,
                 'id_file': item.id_file,
+                'md5_name': item.md5_name,
+                'quality': item.quality,
+                'language': item.language,
+                'name': item.name,
+                'serve': f'http://storage-ffmpeg.playthis.site/{item.name}',
+                'date_created': item.date_created
+            }
+            response.append(temp)
+        return response
+    return {
+        'error': True
+    }
+
+
+@router.get(
+    '/status-data-by-hash/{hash}',
+    status_code=status.HTTP_200_OK,
+)
+def status_data_file(id: int, response: Response, db: Session = Depends(get_db)):
+    data = FileData.find_by_md5(session=db, md5_name=hash)
+    if data:
+        response = []
+        for item in data:
+            temp = {
+                'id': item.id,
+                'id_file': item.id_file,
+                'md5_name': item.md5_name,
                 'quality': item.quality,
                 'language': item.language,
                 'name': item.name,

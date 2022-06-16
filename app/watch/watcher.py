@@ -22,6 +22,6 @@ class watcher(Thread):
                         inst_mkv2mp4.create_cmd()
                         inst_mkv2mp4.run()
                         for out in inst_mkv2mp4.outs:
-                            FileData.add(self.session, item.id, out['quality'], out['language'], out['data'])
+                            FileData.add(self.session, item.id, item.md5_name, out['quality'], out['language'], out['data'])
                         File.update(session=self.session, id=item.id, id_status=3)
                 time.sleep(5)

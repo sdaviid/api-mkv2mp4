@@ -18,6 +18,7 @@ class FileAdd(baseSchema):
 class FileDetail(baseSchema):
     id: int
     original_path: str
+    md5_name: str
     id_status: int
     date_created: datetime
 
@@ -28,6 +29,7 @@ class FileStatusUpdate(baseSchema):
 
 class FileAddData(baseSchema):
     id_file: int
+    md5_name: str
     quality: str
     language: str
     name: str

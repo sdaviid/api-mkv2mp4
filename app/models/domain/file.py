@@ -17,12 +17,14 @@ from sqlalchemy.orm import(
 from app.models.base import ModelBase
 from app.core.database import Base
 from datetime import datetime
+from utils.utils import md5
 
 
 class File(ModelBase, Base):
     __tablename__ = "File"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     original_path = Column(String(255))
+    md5_name = Column(String(255))
     id_status = Column(Integer, ForeignKey("FileStatus.id"))
     date_created = Column(DateTime, default=datetime.utcnow())
 
@@ -30,6 +32,7 @@ class File(ModelBase, Base):
     def add(cls, session, data):
         file = File()
         file.original_path = data.original_path
+        file.md5_name = md5(data.original_path[data.original_path.rindex('/')+1:])
         file.id_status = 1
         session.add(file)
         session.commit()
@@ -51,6 +54,7 @@ class File(ModelBase, Base):
         return session.query(
             cls.id,
             cls.original_path,
+            cls.md5_name,
             cls.id_status,
             cls.date_created
         ).filter_by(id_status=id_status).all()
@@ -69,6 +73,7 @@ class FileData(ModelBase, Base):
     __tablename__ = 'FileData'
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     id_file = Column(Integer)
+    md5_name = Column(String(255))
     quality = Column(String(255))
     language = Column(String(255))
     name = Column(String(255))
@@ -76,9 +81,10 @@ class FileData(ModelBase, Base):
 
 
     @classmethod
-    def add(cls, session, id_file, quality, language, name):
+    def add(cls, session, id_file, md5_name, quality, language, name):
         file_data = FileData()
         file_data.id_file = id_file
+        file_data.md5_name = md5_name
         file_data.quality = quality
         file_data.language = language
         file_data.name = name
@@ -94,8 +100,23 @@ class FileData(ModelBase, Base):
         return session.query(
             cls.id,
             cls.id_file,
+            cls.md5_name,
             cls.quality,
             cls.language,
             cls.name,
             cls.date_created
         ).filter_by(id_file=id_file).all()
+
+
+
+    @classmethod
+    def find_by_md5(cls, session, md5_name):
+        return session.query(
+            cls.id,
+            cls.id_file,
+            cls.md5_name,
+            cls.quality,
+            cls.language,
+            cls.name,
+            cls.date_created
+        ).filter_by(md5_name=md5_name).all()
