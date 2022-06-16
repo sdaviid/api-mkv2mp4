@@ -12,7 +12,7 @@ class baseSchema(BaseModel):
 
 class FileAdd(baseSchema):
     original_path: str = Field(title="Original URL")
-    md5_father = Optional[str] = None
+    md5_father: Optional[str] = None
     
 
 
