@@ -81,7 +81,7 @@ def status_data_file(id: int, response: Response, db: Session = Depends(get_db))
     '/status-data-by-hash/{hash}',
     status_code=status.HTTP_200_OK,
 )
-def status_data_file(id: int, response: Response, db: Session = Depends(get_db)):
+def status_data_file(hash: str, response: Response, db: Session = Depends(get_db)):
     data = FileData.find_by_md5(session=db, md5_name=hash)
     if data:
         response = []
