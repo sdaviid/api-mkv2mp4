@@ -115,6 +115,15 @@ def add_file(id: int, response: Response, db: Session = Depends(get_db)):
     return File.find_by_id(session=db, id=id)
 
 
+@router.get(
+    '/status-hash/{hash}',
+    status_code=status.HTTP_200_OK,
+    response_model=FileDetail
+)
+def add_file(hash: str, response: Response, db: Session = Depends(get_db)):
+    """List all logs"""
+    return File.find_by_hash(session=db, md5_name=hash)
+
 
 @router.put(
     '/update/{id}',

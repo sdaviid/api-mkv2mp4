@@ -60,6 +60,17 @@ class File(ModelBase, Base):
         ).filter_by(id_status=id_status).all()
 
 
+    @classmethod
+    def find_by_hash(cls, session, md5_name):
+        return session.query(
+            cls.id,
+            cls.original_path,
+            cls.md5_name,
+            cls.id_status,
+            cls.date_created
+        ).filter_by(md5_name=md5_name).all()
+
+
 
 class FileStatus(ModelBase, Base):
     __tablename__ = 'FileStatus'
