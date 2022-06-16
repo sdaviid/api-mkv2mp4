@@ -68,7 +68,7 @@ class File(ModelBase, Base):
             cls.md5_name,
             cls.id_status,
             cls.date_created
-        ).filter_by(md5_name=md5_name).all()
+        ).filter_by(md5_name=md5_name).first()
 
 
 
