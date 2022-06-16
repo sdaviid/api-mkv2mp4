@@ -8,11 +8,11 @@ from typing import Optional
 class baseSchema(BaseModel):
     class Config:
         orm_mode = True
-        md5_father = Optional[str] = None
 
 
 class FileAdd(baseSchema):
     original_path: str = Field(title="Original URL")
+    md5_father = Optional[str] = None
     
 
 
