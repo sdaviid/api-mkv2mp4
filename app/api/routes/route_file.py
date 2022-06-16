@@ -35,7 +35,6 @@ router = APIRouter()
     response_model=FileDetail
 )
 def add_file(data: FileAdd, response: Response, db: Session = Depends(get_db)):
-    """List all logs"""
     return File.add(session=db, data=data)
 
 
@@ -46,7 +45,6 @@ def add_file(data: FileAdd, response: Response, db: Session = Depends(get_db)):
     response_model=FileAddData
 )
 def add_file_data(data: FileAddData, response: Response, db: Session = Depends(get_db)):
-    """List all logs"""
     return FileData.add(session=db, data=data)
 
 
@@ -110,8 +108,7 @@ def status_data_file(hash: str, response: Response, db: Session = Depends(get_db
     status_code=status.HTTP_200_OK,
     response_model=FileDetail
 )
-def add_file(id: int, response: Response, db: Session = Depends(get_db)):
-    """List all logs"""
+def status_by_id(id: int, response: Response, db: Session = Depends(get_db)):
     return File.find_by_id(session=db, id=id)
 
 
@@ -120,9 +117,17 @@ def add_file(id: int, response: Response, db: Session = Depends(get_db)):
     status_code=status.HTTP_200_OK,
     response_model=FileDetail
 )
-def add_file(hash: str, response: Response, db: Session = Depends(get_db)):
-    """List all logs"""
+def status_by_hash(hash: str, response: Response, db: Session = Depends(get_db)):
     return File.find_by_hash(session=db, md5_name=hash)
+
+
+@router.get(
+    '/status-hash-father/{hash}',
+    status_code=status.HTTP_200_OK,
+    response_model=List[FileDetail]
+)
+def status_by_father(hash: str, response: Response, db: Session = Depends(get_db)):
+    return File.find_by_md5_father(session=db, md5_father=hash)
 
 
 @router.put(
@@ -130,6 +135,5 @@ def add_file(hash: str, response: Response, db: Session = Depends(get_db)):
     status_code=status.HTTP_200_OK,
     response_model=FileDetail
 )
-def add_file(id: int, data: FileStatusUpdate, response: Response, db: Session = Depends(get_db)):
-    """List all logs"""
+def update(id: int, data: FileStatusUpdate, response: Response, db: Session = Depends(get_db)):
     return File.update(session=db, id=id, data=data)

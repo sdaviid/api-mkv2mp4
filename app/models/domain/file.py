@@ -75,6 +75,18 @@ class File(ModelBase, Base):
         ).filter_by(md5_name=md5_name).first()
 
 
+    classmethod
+    def find_by_md5_father(cls, session, md5_father):
+        return session.query(
+            cls.id,
+            cls.original_path,
+            cls.md5_name,
+            cls.md5_father,
+            cls.id_status,
+            cls.date_created
+        ).filter_by(md5_father=md5_father).first()
+
+
 
 class FileStatus(ModelBase, Base):
     __tablename__ = 'FileStatus'
@@ -89,6 +101,7 @@ class FileData(ModelBase, Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     id_file = Column(Integer)
     md5_name = Column(String(255))
+    md5_father = Column(String(255), default=None)
     quality = Column(String(255))
     language = Column(String(255))
     name = Column(String(255))
@@ -96,10 +109,11 @@ class FileData(ModelBase, Base):
 
 
     @classmethod
-    def add(cls, session, id_file, md5_name, quality, language, name):
+    def add(cls, session, id_file, md5_name, quality, language, name, md5_father=None):
         file_data = FileData()
         file_data.id_file = id_file
         file_data.md5_name = md5_name
+        file_data.md5_father = md5_father
         file_data.quality = quality
         file_data.language = language
         file_data.name = name
@@ -116,6 +130,7 @@ class FileData(ModelBase, Base):
             cls.id,
             cls.id_file,
             cls.md5_name,
+            cls.md5_father,
             cls.quality,
             cls.language,
             cls.name,
@@ -130,8 +145,23 @@ class FileData(ModelBase, Base):
             cls.id,
             cls.id_file,
             cls.md5_name,
+            cls.md5_father,
             cls.quality,
             cls.language,
             cls.name,
             cls.date_created
         ).filter_by(md5_name=md5_name).all()
+
+
+    @classmethod
+    def find_by_md5_father(cls, session, md5_father):
+        return session.query(
+            cls.id,
+            cls.id_file,
+            cls.md5_name,
+            cls.md5_father,
+            cls.quality,
+            cls.language,
+            cls.name,
+            cls.date_created
+        ).filter_by(md5_father=md5_father).all()

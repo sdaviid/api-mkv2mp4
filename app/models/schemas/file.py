@@ -32,6 +32,7 @@ class FileStatusUpdate(baseSchema):
 class FileAddData(baseSchema):
     id_file: int
     md5_name: str
+    md5_father: Optional[str] = None
     quality: str
     language: str
     name: str
