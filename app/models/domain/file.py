@@ -84,7 +84,7 @@ class File(ModelBase, Base):
             cls.md5_father,
             cls.id_status,
             cls.date_created
-        ).filter_by(md5_father=md5_father).first()
+        ).filter_by(md5_father=md5_father).all()
 
 
 

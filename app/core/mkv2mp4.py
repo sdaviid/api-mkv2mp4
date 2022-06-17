@@ -14,9 +14,9 @@ class mkv2mp4(object):
     def create_cmd(self):
         a_count = 0
         for item in self.audio_tracks:
-            out = f'{self.input.split("/")[-1:][0].replace("mkv", "")}-{item.language}.mp4'
+            out = f'{self.input.split("/")[-1:][0].replace("mkv", "")}-{item.language}'
             name = os.path.join(self.output_path, self.input.split('/')[-1:][0].replace('mkv', ''))
-            cmd = f'ffmpeg -i {self.input} -c:v copy -c:a aac -map 0:v:0 -map 0:a:{a_count} -movflags +faststart {name}-{item.language}.mp4'
+            cmd = f'ffmpeg -i {self.input} -c:v copy -c:a aac -map 0:v:0 -map 0:a:{a_count} -movflags +faststart {name}-{item.language}'
             self.cmds.append(cmd)
             self.outs.append({
                 'quality': self.media_info.video_tracks[0].height,
